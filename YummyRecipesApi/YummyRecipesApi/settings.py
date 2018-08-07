@@ -105,6 +105,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+GRAPHENE = {
+        'SCHEMA': 'YummyRecipesApi.schema.schema'
+} 
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
