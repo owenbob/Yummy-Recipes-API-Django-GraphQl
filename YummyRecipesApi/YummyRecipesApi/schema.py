@@ -1,7 +1,20 @@
 import graphene
-import api.schema
+import api.categories.schema
+import api.recipes.schema
 
-class Query(api.schema.Query, graphene.ObjectType):
+class Query(
+        api.categories.schema.Query,
+        api.recipes.schema.Query,
+        graphene.ObjectType
+        
+        ):
         pass
 
-schema = graphene.Schema(query=Query)
+
+class Mutation(
+        api.categories.schema.Mutation
+
+        ):
+        pass
+
+schema = graphene.Schema(query=Query, mutation=Mutation)
