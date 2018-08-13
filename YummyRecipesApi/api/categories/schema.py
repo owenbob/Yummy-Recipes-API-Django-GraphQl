@@ -27,7 +27,7 @@ class Query(graphene.AbstractType):
 
         def resolve_get_category(self,info,id):
             try:
-                exact_category = Categories.objects.get(id=id)
+                exact_category = Categories.objects.get(pk=id)
             except:
                 raise GraphQLError("category does not exist")
             return exact_category
@@ -41,7 +41,6 @@ class CreateCategory(graphene.Mutation):
     category = graphene.Field(CategoriesType)
     def mutate(self,info,**kwargs):
         validate_empty_strings(**kwargs)
-
         cat = Categories(**kwargs)
         cat.save()
 
@@ -52,26 +51,28 @@ class UpdateCategory(graphene.Mutation):
         id = graphene.Int()
         category_title = graphene.String()
         category_description = graphene.String()
+
     category = graphene.Field(CategoriesType)
     def mutate(self,info,id,**kwargs):
         validate_empty_strings(**kwargs)
-        try:
-            exact_category = Categories.objects.filter(pk=id)
-            cat = update_entity_fields(exact_category, **kwargs)
-            return UpdateCategory(category=cat)
-        except:
-            raise GraphQLError("Category not found")
+        # try:
+        exact_category = Categories.objects.get(pk=id)
+        update_entity_fields(exact_category, **kwargs)
+        exact_category.save()
+        return UpdateCategory(category=exact_category)
+        # except:
+        #     raise GraphQLError("Category not found")
 
 class DeleteCategory(graphene.Mutation):
+    message = graphene.String()
     class Arguments:
         id = graphene.Int()
-    category = graphene.Field(CategoriesType)
     def mutate(self,info,id):
         try:
-            exact_category = Categories.objects.filter(pk=id)
-            exact_category.delete()
-            
-            return DeleteCategory(category=exact_category)
+            exact_category = Categories.objects.get(pk=id)
+            exact_category.delete()            
+            event = "Category with id {} has been deleted".format(id)
+            return DeleteCategory(message=event)
         except:
             raise GraphQLError("Category not found")
 
