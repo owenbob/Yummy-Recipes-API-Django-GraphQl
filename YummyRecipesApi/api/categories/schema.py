@@ -55,13 +55,13 @@ class UpdateCategory(graphene.Mutation):
     category = graphene.Field(CategoriesType)
     def mutate(self,info,id,**kwargs):
         validate_empty_strings(**kwargs)
-        # try:
-        exact_category = Categories.objects.get(pk=id)
-        update_entity_fields(exact_category, **kwargs)
-        exact_category.save()
-        return UpdateCategory(category=exact_category)
-        # except:
-        #     raise GraphQLError("Category not found")
+        try:
+            exact_category = Categories.objects.get(pk=id)
+            update_entity_fields(exact_category, **kwargs)
+            exact_category.save()
+            return UpdateCategory(category=exact_category)
+        except:
+            raise GraphQLError("Category not found")
 
 class DeleteCategory(graphene.Mutation):
     message = graphene.String()
