@@ -2,8 +2,10 @@ from django.test import TestCase
 from YummyRecipesApi.schema import schema
 
 from graphene.test import Client
-from api.models import Categories
-
+from api.models import (
+    Categories,
+    Recipes
+    )
 
 
 class BaseTest(TestCase):
@@ -17,4 +19,13 @@ class BaseTest(TestCase):
         )
         cat.save()
 
+        rec = Recipes(
+            category=Categories.objects.get(
+            category_title="Breakfast",
+            category_description="First meal of the day"
+        ),
+        recipe_title="Rolex",
+        recipe_description="Eggs"
+        )
+        rec.save()
             

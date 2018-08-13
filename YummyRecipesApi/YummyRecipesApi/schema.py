@@ -12,7 +12,8 @@ class Query(
 
 
 class Mutation(
-        api.categories.schema.Mutation
+        api.categories.schema.Mutation,
+        api.recipes.schema.Mutation
 
         ):
         pass
