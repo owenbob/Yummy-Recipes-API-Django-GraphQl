@@ -16,7 +16,9 @@ class Query(graphene.ObjectType):
     users = graphene.List(UserType)
 
     def resolve_users(self, info):
-        return get_user_model().objects.all()
+        users = User.objects.all()
+        # import pdb; pdb.set_trace()
+        return users
 class CreateUser(graphene.Mutation):
     user = graphene.Field(UserType)
 

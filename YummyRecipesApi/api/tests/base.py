@@ -1,11 +1,12 @@
 from django.test import TestCase
 from graphene.test import Client
+from django.contrib.auth import get_user_model
+
+from YummyRecipesApi.schema import schema
 from api.models import (
     Categories,
     Recipes
     )
-from django.contrib.auth import get_user_model 
-
 
 
 User = get_user_model()
@@ -30,13 +31,11 @@ class BaseTest(TestCase):
         recipe_description="Eggs"
         )
         rec.save()
+
         test_user = User(
             username="Jackson",
             email="jacks@gmail.com"
         )
         test_user.set_password(123)
         test_user.save()
-
-        print(User.objects.all())
-
-            
+        
