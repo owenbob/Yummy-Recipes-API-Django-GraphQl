@@ -11,6 +11,8 @@ from api.models import (
 
 User = get_user_model()
 
+
+
 class BaseTest(TestCase):
     def setUp(self):
         self.client = Client(schema)

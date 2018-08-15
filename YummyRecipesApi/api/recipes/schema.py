@@ -1,4 +1,5 @@
 import graphene
+
 from graphql import GraphQLError
 
 from graphene_django.types import DjangoObjectType
@@ -11,6 +12,7 @@ from api.utilities.utility import (
     validate_empty_strings,
     update_entity_fields
     )
+
 
 
 class RecipesType(DjangoObjectType):

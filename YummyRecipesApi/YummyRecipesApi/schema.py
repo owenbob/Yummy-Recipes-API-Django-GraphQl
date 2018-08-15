@@ -17,10 +17,8 @@ class Mutation(
         api.categories.schema.Mutation,
         api.recipes.schema.Mutation,
         api.users.schema.Mutation,
-
         ):
         pass
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
-
