@@ -26,3 +26,24 @@ create_user_query_response = {
                                     }
                                 }
                                 }
+
+get_all_users_query = '''
+                    {
+                    users{
+                        username
+                        email
+                    }
+                    }
+                    '''
+
+
+get_all_users_response = {
+                            "data": {
+                                "users": [
+                                {
+                                    "username": "Jackson",
+                                    "email": "jacks@gmail.com"
+                                }
+                                ]
+                            }
+                            }

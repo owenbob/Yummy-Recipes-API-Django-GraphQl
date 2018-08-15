@@ -6,6 +6,7 @@ import api.users.schema
 class Query(
         api.categories.schema.Query,
         api.recipes.schema.Query,
+        api.users.schema.Query,
         graphene.ObjectType
         
         ):
