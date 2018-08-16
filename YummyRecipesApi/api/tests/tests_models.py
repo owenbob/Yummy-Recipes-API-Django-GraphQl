@@ -1,4 +1,6 @@
 from django.test import TestCase
+from django.contrib.auth.models import User
+
 from api.models import (
     Categories,
     Recipes
@@ -15,12 +17,24 @@ class TestModels(TestCase):
         self.assertEqual(str(recipe), recipe.recipe_title)
 
     def test_all_models(self):
+        user = User(
+                username="Jacky",
+                email="jackychan@gmail.com",
+                password="123"
+            )
+        user.save()
+
         t = Categories(
             category_title="My category",
-            category_description="My category description"
+            category_description="My category description",
+            user=User.objects.get(
+                username="Jacky",
+                email="jackychan@gmail.com",
+            )
         )
 
         t.save()
+        print(t.user)
 
         r = Recipes(
             recipe_title="My recipe",

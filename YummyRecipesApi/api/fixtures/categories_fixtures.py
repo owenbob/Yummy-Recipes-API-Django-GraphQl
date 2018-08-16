@@ -1,7 +1,11 @@
 
 create_query = '''
                 mutation{
-                createCategory(categoryTitle:"Breakfast",categoryDescription:"First meal of the day"){
+                createCategory(
+                    userId:"2"
+                    categoryTitle:"Breakfast",
+                    categoryDescription:"First meal of the day"
+                    ){
                     category{
                     id
                     categoryTitle

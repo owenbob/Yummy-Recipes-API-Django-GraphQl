@@ -1,5 +1,6 @@
 import graphene
 from graphql import GraphQLError
+from graphql_jwt.decorators import login_required
 
 from graphene_django.types import DjangoObjectType
 
@@ -24,9 +25,12 @@ class Query(graphene.AbstractType):
                             recipe_id = graphene.Int()
                             )
 
+        @login_required
         def resolve_all_recipes(self,info,*kwargs):
             return Recipes.objects.all()
 
+
+        @login_required
         def resolve_get_one_recipe(self,info,recipe_id):
 
             exact_recipe = Recipes.objects.get(id=recipe_id)
@@ -40,6 +44,8 @@ class CreateRecipe(graphene.Mutation):
         recipe_description = graphene.String()
 
     recipe = graphene.Field(RecipesType)
+
+    @login_required
     def mutate(self,info,category_id,**kwargs):
         category = Categories.objects.get(id=category_id)
         if  not category:
@@ -57,6 +63,8 @@ class UpdateRecipe(graphene.Mutation):
         recipe_description = graphene.String()
 
     recipe = graphene.Field(RecipesType)
+
+    @login_required
     def mutate(self,info,recipe_id,**kwargs):
         validate_empty_strings(**kwargs)
         exact_recipe = Recipes.objects.get(id=recipe_id)
@@ -74,6 +82,7 @@ class DeleteRecipe(graphene.Mutation):
     class Arguments:
         recipe_id = graphene.Int()
 
+    @login_required
     def mutate(self,info,recipe_id):
         recipe = Recipes.objects.get(id=recipe_id)
         if not recipe:

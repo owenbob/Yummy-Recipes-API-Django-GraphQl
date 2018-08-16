@@ -1,7 +1,7 @@
 
 delete_query = '''
                 mutation{
-                deleteRecipe(recipeId:7){
+                deleteRecipe(recipeId:8){
                     message 
                 }
                 }
@@ -10,7 +10,7 @@ delete_query = '''
 delete_response = {
                     "data": {
                         "deleteRecipe": {
-                        "message": "Recipe with id 7 has been deleted"
+                        "message": "Recipe with id 8 has been deleted"
                         }
                     }
                     }
@@ -29,7 +29,7 @@ all_recipes_response = {
                         "data": {
                             "allRecipes": [
                             {
-                                "id": "4",
+                                "id": "5",
                                 "recipeTitle": "Rolex",
                                 "recipeDescription": "Eggs",
                             }
@@ -40,7 +40,7 @@ all_recipes_response = {
 create_query = '''
                     mutation{
                     createRecipe(
-                        categoryId:6,
+                        categoryId:7,
                         recipeTitle:"Luwombo",
                         recipeDescription:"Chicken"
                     ){
@@ -67,7 +67,7 @@ create_query_response = {
 update_query = '''
                    mutation{
                         updateRecipe(
-                            recipeId:7,
+                            recipeId:8,
                             recipeTitle:"Uga Roll",
                             recipeDescription:"Another Rolex"
                         ){
