@@ -1,3 +1,4 @@
+import json
 from api.tests.base  import BaseTest
 
 from api.fixtures.recipes_fixtures import(
@@ -13,16 +14,36 @@ from api.fixtures.recipes_fixtures import(
 
 class RecipesTestCase(BaseTest):
     def test_all_recipes(self):
-        query = self.client.execute(all_recipes)
-        self.assertEquals(query,all_recipes_response)
+        query = self.client.post(
+            '/yummyrecipesapi?query='+all_recipes,
+            HTTP_AUTHORIZATION=self.test_token,
+            content_type='application/json'
+        )
+        jresp = json.loads(query.content.decode())
+        self.assertEquals(jresp,all_recipes_response)
 
     def test_create_recipe(self):
-        query = self.client.execute(create_query)
-        self.assertEquals(query,create_query_response)
+        query = self.client.post(
+            '/yummyrecipesapi?query='+create_query,
+            HTTP_AUTHORIZATION=self.test_token,
+            content_type='application/json'
+        )
+        jresp = json.loads(query.content.decode())
+        self.assertEquals(jresp,create_query_response)
 
     def test_update_and_delete_recipe(self):
-        query = self.client.execute(update_query)
-        self.assertEquals(query,update_query_response)
+        query = self.client.post(
+            '/yummyrecipesapi?query='+update_query,
+            HTTP_AUTHORIZATION=self.test_token,
+            content_type='application/json'
+        )
+        jresp = json.loads(query.content.decode())
+        self.assertEquals(jresp,update_query_response)
 
-        query = self.client.execute(delete_query)
-        self.assertEquals(query,delete_response)
+        query = self.client.post(
+            '/yummyrecipesapi?query='+delete_query,
+            HTTP_AUTHORIZATION=self.test_token,
+            content_type='application/json'
+        )
+        jresp = json.loads(query.content.decode())
+        self.assertEquals(jresp,delete_response)

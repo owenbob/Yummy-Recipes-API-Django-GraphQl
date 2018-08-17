@@ -47,3 +47,16 @@ get_all_users_response = {
                                 ]
                             }
                             }
+
+
+login_user_query = '''
+                        mutation{
+                            loginUser(
+                                username:"Jackson",
+                                password:"123"
+                            ){
+                                token
+                            }
+                        }
+
+                        '''
