@@ -3,8 +3,8 @@ python:
   - "3.6"
 
 # command to install dependencies
-before_install:
-  - cd YummyRecipesApi/
+# before_install:
+#   - cd YummyRecipesApi/
 
 install:
   - pip install -r requirements.txt
