@@ -32,19 +32,19 @@ class CategoryTestCase(BaseTest):
         
         self.assertEquals(jresp,create_query_response)
 
-    # def test_update_and_delete(self):
-    #     query = self.client.post(
-    #         '/yummyrecipesapi?query='+update_query,
-    #         HTTP_AUTHORIZATION=self.test_token,
-    #         content_type='application/json'
-    #     )
-    #     jresp = json.loads(query.content.decode())
-    #     self.assertEquals(jresp,update_query_response)
+    def test_update_and_delete(self):
+        query = self.client.post(
+            '/yummyrecipesapi?query='+update_query,
+            HTTP_AUTHORIZATION=self.test_token,
+            content_type='application/json'
+        )
+        jresp = json.loads(query.content.decode())
+        self.assertEquals(jresp,update_query_response)
 
-    #     query = self.client.post(
-    #         '/yummyrecipesapi?query='+delete_query,
-    #         HTTP_AUTHORIZATION=self.test_token,
-    #         content_type='application/json'
-    #     )
-    #     jresp = json.loads(query.content.decode())
-    #     self.assertEquals(jresp,delete_query_response)
+        query = self.client.post(
+            '/yummyrecipesapi?query='+delete_query,
+            HTTP_AUTHORIZATION=self.test_token,
+            content_type='application/json'
+        )
+        jresp = json.loads(query.content.decode())
+        self.assertEquals(jresp,delete_query_response)
