@@ -1,12 +1,12 @@
-
 import graphene
+from graphql import GraphQLError
+from graphql_jwt.decorators import login_required
+
 from graphene_django import DjangoObjectType
 from django.contrib.auth import get_user_model
 
 
 User = get_user_model()
-
-
 
 
 class UserType(DjangoObjectType):
@@ -15,10 +15,11 @@ class UserType(DjangoObjectType):
 class Query(graphene.ObjectType):
     users = graphene.List(UserType)
 
+    @login_required
     def resolve_users(self, info):
-        users = User.objects.all()
-        # import pdb; pdb.set_trace()
-        return users
+        all_users = User.objects.all()
+        return all_users
+
 class CreateUser(graphene.Mutation):
     user = graphene.Field(UserType)
 

@@ -1,3 +1,4 @@
+import json
 from api.tests.base import BaseTest
 
 from api.fixtures.user_fixtures import (
@@ -10,13 +11,14 @@ from api.fixtures.user_fixtures import (
 class UserTestCase(BaseTest):
 
     def test_get_all_users(self):
-        query =  self.client.execute(get_all_users_query)
-        self.assertEquals(query,get_all_users_response) 
+        query = self.client.post(
+            '/yummyrecipesapi?query='+get_all_users_query,
+            HTTP_AUTHORIZATION=self.test_token,
+            content_type='application/json'
+        )
+        jresp = json.loads(query.content.decode())
+        self.assertEquals(jresp,get_all_users_response) 
 
     def test_create_user(self):
-        query = self.client.execute(create_user_query)
+        query = self.test_client.execute(create_user_query)
         self.assertEquals(query,create_user_query_response)
-
-    
-
-    

@@ -1,7 +1,9 @@
 import graphene
 from graphql import GraphQLError
+from graphql_jwt.decorators import login_required
 
 from graphene_django.types import DjangoObjectType
+from django.contrib.auth.models import User
 
 
 from api.models import Categories
@@ -22,9 +24,11 @@ class Query(graphene.AbstractType):
             id = graphene.Int()
         )
 
+        @login_required
         def resolve_all_categories(self,info,*kwargs):
             return Categories.objects.all()
 
+        @login_required
         def resolve_get_category(self,info,id):
             try:
                 exact_category = Categories.objects.get(pk=id)
@@ -35,13 +39,25 @@ class Query(graphene.AbstractType):
 
 class CreateCategory(graphene.Mutation):
     class Arguments:
+        user_id = graphene.String()
         category_title = graphene.String()
         category_description = graphene.String()
 
     category = graphene.Field(CategoriesType)
-    def mutate(self,info,**kwargs):
+
+    @login_required
+    def mutate(self,info,user_id,**kwargs):
+        user = User.objects.get(id=user_id)
+        
+
         validate_empty_strings(**kwargs)
-        cat = Categories(**kwargs)
+        cat = Categories(
+            user=User.objects.get(
+                username=user.username,
+                email=user.email,
+            ),
+            **kwargs
+        )
         cat.save()
 
         return CreateCategory(category=cat)
@@ -53,6 +69,8 @@ class UpdateCategory(graphene.Mutation):
         category_description = graphene.String()
 
     category = graphene.Field(CategoriesType)
+
+    @login_required
     def mutate(self,info,id,**kwargs):
         validate_empty_strings(**kwargs)
         try:
@@ -67,6 +85,8 @@ class DeleteCategory(graphene.Mutation):
     message = graphene.String()
     class Arguments:
         id = graphene.Int()
+
+    @login_required
     def mutate(self,info,id):
         try:
             exact_category = Categories.objects.get(pk=id)
